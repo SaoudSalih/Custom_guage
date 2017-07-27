@@ -179,6 +179,13 @@ public class CustomGauge extends View {
 
     }
 
+
+    public void setValue(int value) {
+        mValue = value;
+        mPoint = (int) (mStartAngle + (mValue-mStartValue) * mPointAngle);
+        invalidate();
+    }
+
     public void setGauge(final Activity activity, final CustomGauge gauge, int currentValue, final int speed, final TextView text){
 
         final float setValue =(float) currentValue/speed;
@@ -205,12 +212,6 @@ public class CustomGauge extends View {
             }
         }.start();
 
-    }
-
-    public void setValue(int value) {
-        mValue = value;
-        mPoint = (int) (mStartAngle + (mValue-mStartValue) * mPointAngle);
-        invalidate();
     }
 
     public int getValue() {
