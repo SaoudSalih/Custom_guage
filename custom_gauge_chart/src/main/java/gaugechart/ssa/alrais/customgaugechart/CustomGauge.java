@@ -180,7 +180,7 @@ public class CustomGauge extends View {
     }
 
     public void setGauge(final Activity activity, final CustomGauge gauge, int currentValue, final int speed, final TextView text){
-        
+
         final float setValue =(float) currentValue/speed;
         new Thread() {
             public void run() {
@@ -190,7 +190,7 @@ public class CustomGauge extends View {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                float value =(float) setValue*i;
+                                float value =setValue*i;
 
                                 gauge.setValue((int) value);
                                 text.setText(Integer.toString(gauge.getValue()));
