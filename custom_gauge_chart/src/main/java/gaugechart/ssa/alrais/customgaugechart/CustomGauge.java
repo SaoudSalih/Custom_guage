@@ -1,5 +1,6 @@
 package gaugechart.ssa.alrais.customgaugechart;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * Created by Saoud on 26/7/17.
@@ -43,20 +45,17 @@ public class CustomGauge extends View {
     private int mDividersCount;
     private boolean mDividerDrawFirst;
     private boolean mDividerDrawLast;
-    int[] colors = {Color.RED, Color.BLUE};
-    float[] positions = {0,90f};
+    int i;
 
 
 
     public CustomGauge(Context context) {
         super(context);
-        Log.i("checkxxx","osk");
         init();
     }
     public CustomGauge(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomGauge, 0, 0);
-        Log.i("checkxxx","ok");
         // stroke style
         setStrokeWidth(a.getDimension(R.styleable.CustomGauge_gaugeStrokeWidth, 10));
         setStrokeColor(a.getColor(R.styleable.CustomGauge_gaugeStrokeColor, ContextCompat.getColor(context, android.R.color.darker_gray)));
@@ -177,6 +176,31 @@ public class CustomGauge extends View {
                 canvas.drawArc(mRect, mStartAngle + i* mDividerStepAngle, mDividerSize, false, mPaint);
             }
         }
+
+    }
+
+    public void setGauge(final Activity activity, final CustomGauge gauge, final int setValue, final TextView text){
+
+        new Thread() {
+            public void run() {
+                for (i=1;i<=20;i++) {
+                    try {
+
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                gauge.setValue(setValue* i);
+                                text.setText(Integer.toString(gauge.getValue()));
+
+                            }
+                        });
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
 
     }
 
