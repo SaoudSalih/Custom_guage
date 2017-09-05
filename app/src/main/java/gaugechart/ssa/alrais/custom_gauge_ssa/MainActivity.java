@@ -18,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         guage =(CustomGauge)findViewById(R.id.gauge2);
         TextView text =(TextView)findViewById(R.id.textView2);
-        guage.setEndValue(10000);
-        String i ="6544";
+        guage.setEndValue(500000);
+        String i ="350000";
         Double d=Double.parseDouble(i);
         Log.i("chekedmode",d.toString());
-        guage.setGauge(this,guage,d,60,text);
+        guage.setGauge(this,guage,d,60,text,500000);
 //        text.setText(Double.toString(curr_value));
 
 
