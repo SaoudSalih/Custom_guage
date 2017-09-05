@@ -186,9 +186,10 @@ public class CustomGauge extends View {
         invalidate();
     }
 
-    public void setGauge(final Activity activity, final CustomGauge gauge, int currentValue, final int speed, final TextView text){
+    public void setGauge(final Activity activity, final CustomGauge gauge, final Double curr_value, final int speed, final TextView text){
 
-        final float setValue =(float) currentValue/speed;
+        final int currentValue =curr_value.intValue();
+        final float setValue = currentValue/speed;
         new Thread() {
             public void run() {
                 for (i=1;i<=speed;i++) {
@@ -198,19 +199,27 @@ public class CustomGauge extends View {
                             @Override
                             public void run() {
                                 float value =setValue*i;
-
                                 gauge.setValue((int) value);
                                 text.setText(Integer.toString(gauge.getValue()));
+                                text.post(new Runnable() {
+                                    public void run() {
+                                        text.setText(Double.toString(curr_value));
+                                    }
+                                });
 
                             }
                         });
+
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
         }.start();
+
+
 
     }
 
